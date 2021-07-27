@@ -6,6 +6,10 @@ use KanbanBoard\Utilities;
 require '../classes/KanbanBoard/Github.php';
 require '../classes/Utilities.php';
 require '../classes/KanbanBoard/Authentication.php';
+require_once '../../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable('../../');
+$dotenv->load();
 
 $repositories = explode('|', Utilities::env('GH_REPOSITORIES'));
 $authentication = new \KanbanBoard\Login();
@@ -16,4 +20,5 @@ $data = $board->board();
 $m = new Mustache_Engine(array(
 	'loader' => new Mustache_Loader_FilesystemLoader('../views'),
 ));
+var_dump($data);
 echo $m->render('index', array('milestones' => $data));
